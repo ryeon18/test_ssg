@@ -86,14 +86,14 @@ jobs:
       - name: Set up environment variables
         env:
           NOTION_KEY: ${{ secrets.NOTION_KEY }}
-          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
         run: |
           echo "NOTION_KEY=$NOTION_KEY" >> $GITHUB_ENV
           echo "NOTION_DATABASE_ID=$NOTION_DATABASE_ID" >> $GITHUB_ENV
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: pnpm next build
       - name: Static HTML export with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next export
+        run: pnpm next export
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
