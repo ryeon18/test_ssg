@@ -91,9 +91,9 @@ jobs:
           echo "NOTION_KEY=$NOTION_KEY" >> $GITHUB_ENV
           echo "NOTION_DATABASE_ID=$NOTION_DATABASE_ID" >> $GITHUB_ENV
       - name: Build with Next.js
-        run: pnpm next build
+        run: pnpm run build
       - name: Static HTML export with Next.js
-        run: pnpm next export
+        run: pnpm run export
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
