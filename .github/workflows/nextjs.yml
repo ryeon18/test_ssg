@@ -93,7 +93,7 @@ jobs:
       - name: Build with Next.js
         run: pnpm run build
       - name: Static HTML export with Next.js
-        run: pnpm run export
+        run: pnpm run start
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
