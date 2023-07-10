@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "export": "next export"
   },
   "lint-staged": {
     "*.+(js|jsx|ts|tsx|json|css|md|mdx)": [
