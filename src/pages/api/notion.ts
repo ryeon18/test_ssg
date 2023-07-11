@@ -21,12 +21,13 @@ export const getPage = async () => {
 
 const handler = (data: Drama) => {
   if (data.properties) {
-    const { name, role, description, icon } = data.properties;
+    const { name, role, description, icon, priority } = data.properties;
     return {
       name: name.title[0].plain_text,
       role: role.rich_text[0].plain_text,
       description: description.rich_text[0].plain_text,
       icon: icon.rich_text[0].plain_text,
+      priority: priority.rich_text[0].plain_text,
     };
   }
 };
@@ -43,6 +44,11 @@ export interface Drama {
   object: string;
   parent: { [key: string]: string };
   properties: {
+    priority: {
+      id: string;
+      type: string;
+      rich_text: { [key: string]: string | null }[];
+    };
     description: {
       id: string;
       type: string;

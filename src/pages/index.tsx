@@ -1,34 +1,97 @@
-import { Container, Typography, Box, Link } from "@mui/material";
-import Image from "next/image";
+import { Container } from "@mui/material";
+import GridBox from "src/components/GridBox";
 import { getPage } from "../pages/api/notion";
 
+export interface dataType {
+  role: string;
+  name: string;
+  description: string;
+  icon: string;
+  priority: string;
+}
+
 export interface HomeProps {
-  result: {
+  result: dataType[];
+}
+
+export function findMainRole(
+  array: dataType[],
+  filterFunc: (item: {
     role: string;
-    description: string;
     name: string;
+    description: string;
     icon: string;
-  }[];
+    priority: string;
+  }) => boolean
+) {
+  const newArray: dataType[] = [];
+  array.map((e: dataType) => {
+    if (filterFunc(e)) {
+      newArray.push(e);
+    }
+  });
+  return newArray;
 }
 
 export default function Home({ result }: HomeProps) {
+  const mainRole = findMainRole(result, (item) => item.priority === "메인");
+  const subRole = findMainRole(result, (item) => item.priority === "서브");
+
   if (!result) return null;
-  console.log({ result });
   return (
-    <Container maxWidth="lg">
-      {result.map((data, i) => {
-        const { role, description, name, icon } = data;
-        return (
-          <div key={i}>
-            {/* <img src={icon} /> */}
-            <Image alt={role} src={icon} width={200} height={200} />
-            <h1>
-              등장인물: {role} ({name})
-            </h1>
-            <p>{description}</p>
-          </div>
-        );
-      })}
+    <Container
+      maxWidth="md"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <article
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        {mainRole.map((data, i) => {
+          const { role, description, name, icon, priority } = data;
+          return (
+            <GridBox
+              key={i}
+              role={role}
+              description={description}
+              name={name}
+              icon={icon}
+              priority={priority}
+            />
+          );
+        })}
+      </article>
+      <article
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          marginTop: "50px",
+        }}
+      >
+        {subRole.map((data, i) => {
+          const { role, description, name, icon, priority } = data;
+          return (
+            <GridBox
+              key={i}
+              role={role}
+              description={description}
+              name={name}
+              icon={icon}
+              priority={priority}
+            />
+          );
+        })}
+      </article>
     </Container>
   );
 }
