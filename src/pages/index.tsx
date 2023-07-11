@@ -34,10 +34,10 @@ export function findMainRole(
 }
 
 export default function Home({ result }: HomeProps) {
+  if (!result) return null;
   const mainRole = findMainRole(result, (item) => item.priority === "메인");
   const subRole = findMainRole(result, (item) => item.priority === "서브");
 
-  if (!result) return null;
   return (
     <Container
       maxWidth="md"
